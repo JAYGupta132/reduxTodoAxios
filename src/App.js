@@ -1,16 +1,13 @@
-import "./App.css";
-import TodoListContainer from "./containers/TodoListContainer";
+import TodoForm from "./components/TodoList";
+import ShowTodo from "./components/ShowTodo";
 import { Routes, Route } from "react-router-dom";
-import ShowTodoContainer from "./containers/ShowTodoContainer";
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route exact path="/" element={<TodoListContainer />} />
-        <Route exact path="/Show-Todo" element={<ShowTodoContainer  
-  
-   />} />
+        <Route exact path="/" element={<TodoForm />} />
+        <Route exact path="/Show-Todo" element={<ShowTodo />} />
       </Routes>
     </div>
   );

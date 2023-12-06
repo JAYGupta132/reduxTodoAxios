@@ -4,10 +4,13 @@ import { Button } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addTodoRequest, editTodoRequest } from "../thunk/request";
 
 export default function TodoForm(props) {
-  const { addTodoHandler, editTodoHandler, editingTodo, handleCloseEditModal } =
-    props;
+  const { editingTodo } = props;
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [addData, setAddData] = useState(false);
@@ -41,14 +44,10 @@ export default function TodoForm(props) {
     e.preventDefault();
     if (validateCheck()) {
       if (editingTodo) {
-        editTodoHandler(
-          editingTodo.index,
-          { title, description },
-          );
-          setUpdatedData(true)
-        // handleCloseEditModal();
+        dispatch(editTodoRequest(editingTodo.index, { title, description }));
+        setUpdatedData(true);
       } else {
-        addTodoHandler({ title, description });
+        dispatch(addTodoRequest({ title, description }));
         setAddData(true);
       }
     }
@@ -92,7 +91,7 @@ export default function TodoForm(props) {
                 required
                 name="description"
                 value={description}
-                onChange={(event) =>{
+                onChange={(event) => {
                   inputChange(event);
                   setDescription(event.target.value);
                 }}

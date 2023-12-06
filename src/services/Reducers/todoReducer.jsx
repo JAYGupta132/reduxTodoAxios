@@ -1,32 +1,42 @@
 const initialData = {
   list: [],
 };
-const todoReducers = (state = [], action) => {
+
+const todoReducers = (state = initialData, action) => {
   switch (action.type) {
     case "ADD_TODO":
-      return [...state, { list: action.data }];
-    
+      return { ...state, list: [...state.list, action.data] };
+
     case "GET_TODO":
-      return action.data;
+      return { ...state, list: action.data };
 
     case "REMOVE_TODO":
-      return state.filter((item, index) => index !== action.payload);
+      return {
+        ...state,
+        list: state.list.filter((item, index) => index !== action.payload),
+      };
 
     case "DONE_TODO":
-      return state.map((item, index) => {
-        if (index === action.payload) {
-          return { ...item, read: true };
-        }
-        return item;
-      });
+      return {
+        ...state,
+        list: state.list.map((item, index) => {
+          if (index === action.payload) {
+            return { ...item, read: true };
+          }
+          return item;
+        }),
+      };
 
     case "EDIT_TODO":
-      return state.map((item, index) => {
-        if (index === action.payload.index) {
-          return { ...item, ...action.payload.newData };
-        }
-        return item;
-      });
+      return {
+        ...state,
+        list: state.list.map((item, index) => {
+          if (index === action.payload.index) {
+            return { ...item, ...action.payload.newData };
+          }
+          return item;
+        }),
+      };
 
     default:
       return state;

@@ -1,25 +1,25 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import TodoList from "./TodoList";
 import Modal from "react-bootstrap/Modal";
+import {
+  fetchTodoRequest,
+  removeTodoRequest,
+  doneTodoRequest,
+} from "../thunk/request";
 
-const ShowTodo = (props) => {
-  const {
-    data,
-    fetchTodoHandler,
-    addTodoHandler,
-    editTodoHandler,
-    removeTodoHandler,
-    doneTodoHandler,
-  } = props;
+const ShowTodo = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingTodo, setEditingTodo] = useState(null);
 
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.todoReducers);
+
   const handleEditTodo = (index) => {
-    setEditingTodo({ index, data: data[index]});
+    setEditingTodo({ index, data: data.list[index] });
     setShowEditModal(true);
   };
 
@@ -27,10 +27,18 @@ const ShowTodo = (props) => {
     setEditingTodo(null);
     setShowEditModal(false);
   };
+
   useEffect(() => {
-    // Fetch data when the component mounts
-    fetchTodoHandler();
-  }, [fetchTodoHandler]);
+    dispatch(fetchTodoRequest());
+  }, [dispatch]);
+
+  const removeTodoHandler = (index) => {
+    dispatch(removeTodoRequest(index));
+  };
+
+  const doneTodoHandler = (index) => {
+    dispatch(doneTodoRequest(index));
+  };
 
   return (
     <>
@@ -55,8 +63,8 @@ const ShowTodo = (props) => {
             </tr>
           </thead>
           <tbody>
-            {data &&
-              data.map((item, index) => (
+            {data.list &&
+              data.list.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.title}</td>
@@ -69,7 +77,6 @@ const ShowTodo = (props) => {
                       >
                         Edit
                       </Button>
-
                       <Button
                         variant="danger"
                         onClick={() => removeTodoHandler(index)}
@@ -94,8 +101,6 @@ const ShowTodo = (props) => {
           </Modal.Header>
           <Modal.Body>
             <TodoList
-              addTodoHandler={addTodoHandler}
-              editTodoHandler={editTodoHandler}
               editingTodo={editingTodo}
               handleCloseEditModal={handleCloseEditModal}
             />

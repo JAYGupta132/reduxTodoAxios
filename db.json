@@ -1,39 +1,32 @@
 {
   "todos": [
     {
-      "title": "title 1",
+      "title": "title1",
       "description": "des 1",
-      "id": 1,
-      "read": true
-    },
-    {
-      "title": "title 2",
-      "description": "des 2",
       "id": 2,
       "read": true
     },
     {
-      "title": "title 3",
-      "description": "des 3",
+      "title": "title 2",
+      "description": "title 2",
       "id": 3,
       "read": true
-    }
-  ],
-  "posts": [
+    },
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "title": "title 3",
+      "description": "title 3",
+      "id": 4
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "title": "title 4",
+      "description": "title 4",
+      "id": 5
+    },
+    {
+      "title": "qqes",
+      "description": "qqes",
+      "id": 6,
+      "read": true
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
