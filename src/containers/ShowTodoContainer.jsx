@@ -1,6 +1,6 @@
 import ShowTodo from "../components/ShowTodo";
 import { connect } from "react-redux";
-import { removeTodo, doneTodo, editTodo, getTodo, fetchTodo } from "../services/Actions";
+import { removeTodo, doneTodo, editTodo, fetchTodo } from "../services/Actions";
 
 const mapStateToProps = (state) => ({
   data: state.todoReducers,
